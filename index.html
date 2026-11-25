@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pembuat Invoice</title>
+  <meta name="description" content="Buat invoice langsung di browser, lalu cetak atau simpan sebagai PDF.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar no-print">
+    <h1>Pembuat Invoice</h1>
+    <div class="actions">
+      <button id="btn-reset" class="btn ghost" type="button">Reset</button>
+      <button id="btn-print" class="btn primary" type="button">Cetak / Simpan PDF</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <form class="editor no-print" id="editor" autocomplete="off">
+
+      <fieldset>
+        <legend>Pengirim</legend>
+        <div class="row">
+          <label class="field grow">Logo (opsional)
+            <input type="file" id="logo-file" accept="image/*">
+          </label>
+          <button type="button" class="btn small ghost" id="logo-clear">Hapus logo</button>
+        </div>
+        <label class="field">Nama usaha
+          <input type="text" data-bind="from.name">
+        </label>
+        <label class="field">Alamat
+          <textarea rows="2" data-bind="from.address"></textarea>
+        </label>
+        <label class="field">Kontak (email, telepon)
+          <textarea rows="2" data-bind="from.contact"></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Ditagihkan kepada</legend>
+        <label class="field">Nama klien
+          <input type="text" data-bind="to.name">
+        </label>
+        <label class="field">Alamat
+          <textarea rows="2" data-bind="to.address"></textarea>
+        </label>
+        <label class="field">Kontak
+          <textarea rows="2" data-bind="to.contact"></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Detail invoice</legend>
+        <div class="grid2">
+          <label class="field">Nomor invoice
+            <input type="text" data-bind="number">
+          </label>
+          <label class="field">Mata uang
+            <select data-bind="currency">
+              <option value="IDR">IDR (Rupiah)</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="SGD">SGD</option>
+            </select>
+          </label>
+          <label class="field">Tanggal
+            <input type="date" data-bind="date">
+          </label>
+          <label class="field">Jatuh tempo
+            <input type="date" data-bind="due">
+          </label>
+        </div>
+        <label class="field">Warna aksen
+          <input type="color" data-bind="accent">
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Item</legend>
+        <div id="items" class="items"></div>
+        <button type="button" class="btn small" id="add-item">+ Tambah item</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Diskon dan pajak</legend>
+        <div class="grid2">
+          <label class="field">Diskon (%)
+            <input type="number" min="0" max="100" step="any" inputmode="decimal" data-bind="discount" data-type="number">
+          </label>
+          <label class="field">Pajak / PPN (%)
+            <input type="number" min="0" max="100" step="any" inputmode="decimal" data-bind="tax" data-type="number">
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Catatan dan pembayaran</legend>
+        <label class="field">Informasi pembayaran
+          <textarea rows="3" data-bind="payment"></textarea>
+        </label>
+        <label class="field">Catatan
+          <textarea rows="2" data-bind="notes"></textarea>
+        </label>
+        <label class="field">Nama penandatangan
+          <input type="text" data-bind="signer">
+        </label>
+      </fieldset>
+
+      <p class="hint">Data tersimpan otomatis di browser ini. Saat dialog cetak terbuka, pilih "Simpan sebagai PDF" dan matikan opsi "Header dan footer".</p>
+    </form>
+
+    <section class="preview" aria-label="Pratinjau invoice">
+      <div class="paper" id="paper"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
